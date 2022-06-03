@@ -1,4 +1,4 @@
-# Deploy VM Ubuntu 20.4 on vSphere 6.7 with Terraform
+# Criando VMs Ubuntu 20.4 no vSphere 6.7 com Terraform
 
 A idea desse post nasceu do desafio de usar IaC dentro de um DataCenter vmware. O objetivo era automatizar a criação de Cluster Vanilas de Kubernetes usando o Terraform.
 O sistema operacional escolhido para os Nodes kubernetes foi o Ubuntu 20.4.4 LTS, que é uma versão estável do Ubuntu com suporte até 2025. 
@@ -28,7 +28,7 @@ sudo apt-get purge cloud-init
 sudo rm -rf /etc/cloud/ && sudo rm -rf /var/lib/cloud/
 sudo reboot
 ```
-Um outro problema que eu encontrei era que a interface de rede (NIC) não conectava a VM (Com isso o TerraForm falhava 🤦‍♂️). O problema era causado porque o dbus.service era executado depois do open-vm-tools.service. O dbus.service deveria identificar a placa de redes para então o open-vm-tools podesse customiza-la. Precisamos editar o arquivo do open-vm-tools.service, ele fica localizado em /li/systemd/system/open-vm-tools.service. Adicione a linha abaixo, ela deve ficar dentro bloco [units]. Com isso o open-vm-tools.service só será executado depois do dbus.service.
+Um outro problema que eu encontrei era que a interface de rede (NIC) não conectava a VM (Com isso o TerraForm falhava 🤦‍♂️). O problema era causado porque o dbus.service era executado depois do open-vm-tools.service. O dbus.service deveria identificar a placa de redes para então o open-vm-tools podesse customiza-la. Precisamos que o serviço open-vm-tools seja executado antes do dbus, para isso precisamos editar o arquivo /li/systemd/system/open-vm-tools.service. Adicione a linha abaixo, ela deve ficar dentro do bloco [units]. 
 
 ```
 [units]
@@ -44,4 +44,42 @@ sudo shutdown now
 ```
 Antes prosseguir devemos editar as settings da VM: 
 * Mude do Network Adpter para a padrão do vCenter 
-* O CD/DVD não pode ter nehuma ISO carregada escolha a opção Client Device
+* O CD/DVD não pode ter nehuma ISO carregada escolha a opção Client Device ou remova.
+
+Clique com o botão direito na VM _template > convert to Template_ e então clique em Ok. 
+
+## 2. Criação das VMs com Terraform
+
+Existe um provider para o vSphere oferecido pela Vmware no harshiCorp. Ele atualmente está na versão 2.1.1, para usa-lo você vai precisar das credênciais do vCenter que você deseja usar. Abaixo as variavéis do terraform.tfvars. 
+
+```
+# terraform.tfvars
+# vsphere Credentials
+vcenter_username = ""
+vcenter_password = ""
+vcenter_server  = ""
+
+# DC info
+vsphere_cluster = ""
+dc_name  = ""
+template_name = ""
+
+# VM info
+vm_name = [""] # You can create multiple VM, just by adding to the list
+vm_datastore = "" # In our case there is only one datastore
+vm_network = "" 
+host_name = [""] # Hostname list legth should be the same of vm_name 
+ipv4_address = [""] # Ip address list legth should be the same of vm_name 
+ipv4_gateway = ""
+
+```
+Você pode fazer um clone do repositório do módulo ou simplesmente importa-lo. Agora é só rodar o Terraform. 😍
+```
+terraform init
+terraform plan
+terraform apply
+```
+Referências: 
+* https://kb.vmware.com/s/article/59687
+* https://fabianlee.org/2021/08/16/terraform-creating-an-ubuntu-focal-template-and-then-guest-vm-in-vcenter/
+* https://github.com/vmware/open-vm-tools/issues/421

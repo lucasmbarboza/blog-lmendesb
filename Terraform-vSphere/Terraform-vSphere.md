@@ -37,7 +37,7 @@ Um outro problema que eu encontrei era que a interface de rede não conectava a 
 After=dbus.service
 ...
 ```
-Como as versões < 6.7U3 do vCenter não suportam o Ubuntu 20.04.4 precisamos fazer um pequena trapaça. O open-vm-tools usa o arquvio /etc/issue para identificar a distribuição do Ubuntu, vamos editar esse arquivo 😏.
+Como as versões < 6.7U3 do vCenter não suportam o Ubuntu 20.04.4 precisamos fazer uma pequena trapaça. O open-vm-tools usa o arquvio /etc/issue para identificar a distribuição do Ubuntu, vamos editar esse arquivo 😏.
 ```
 sudo sed -i 's/20/18/g' /etc/issue
 ``` 

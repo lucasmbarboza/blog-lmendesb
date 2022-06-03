@@ -29,7 +29,7 @@ sudo apt-get purge cloud-init
 sudo rm -rf /etc/cloud/ && sudo rm -rf /var/lib/cloud/
 sudo reboot
 ```
-Um outro problema que eu encontrei era que a interface de rede (NIC) não conectava a VM (Com isso o TerraForm falhava 🤦‍♂️). O problema era causado porque o dbus.service era executado depois do open-vm-tools.service. O dbus.service deveria identificar a placa de redes para então o open-vm-tools podesse customiza-la. Precisamos que o serviço open-vm-tools seja executado antes do dbus, para isso precisamos editar o arquivo /li/systemd/system/open-vm-tools.service. Adicione a linha abaixo, ela deve ficar dentro do bloco [units]. 
+Um outro problema que eu encontrei era que a interface de rede não conectava a VM (Com isso o TerraForm falhava 🤦‍♂️). O problema era causado porque o dbus.service era executado depois do open-vm-tools.service. O dbus.service deveria identificar a placa de redes para então o open-vm-tools podesse customiza-la. Precisamos que o serviço open-vm-tools seja executado antes do dbus, para isso precisamos editar o arquivo /li/systemd/system/open-vm-tools.service. Adicione a linha abaixo, ela deve ficar dentro do bloco [units]. 
 
 ```
 [units]

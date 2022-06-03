@@ -90,3 +90,4 @@ terraform apply
 * https://kb.vmware.com/s/article/59687
 * https://fabianlee.org/2021/08/16/terraform-creating-an-ubuntu-focal-template-and-then-guest-vm-in-vcenter/
 * https://github.com/vmware/open-vm-tools/issues/421
+* https://registry.terraform.io/providers/hashicorp/vsphere/latest/docs

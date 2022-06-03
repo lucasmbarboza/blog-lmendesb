@@ -1,12 +1,12 @@
-# Criando VMs Ubuntu 20.4 no vSphere 6.7 com Terraform
+# Criando VMs Ubuntu 20.04 no vSphere 6.7 com Terraform
 
 A idea desse post nasceu do desafio de usar IaC dentro de um DataCenter vmware. O objetivo era automatizar a criação de Cluster Vanilas de Kubernetes usando o Terraform.
-O sistema operacional escolhido para os Nodes kubernetes foi o Ubuntu 20.4.4 LTS, que é uma versão estável do Ubuntu com suporte até 2025. 
-Usar o Terraform para criar os Nodes deveria ser uma tarefa simples, mas se mostrou muito trabalhosa pelo fato da versão instalada do vCenter não suportar o Ubuntu 20.4.4 LTS. 
+O sistema operacional escolhido para os Nodes kubernetes foi o Ubuntu 20.04.4 LTS, que é uma versão estável do Ubuntu com suporte até 2025. 
+Usar o Terraform para criar os Nodes deveria ser uma tarefa simples, mas se mostrou muito trabalhosa pelo fato da versão instalada do vCenter não suportar o Ubuntu 20.04.4 LTS. 
 
 Os compontentes dessa bagunça são: 
 * Vmware vCenter 6.7; (Aparentemente versões >= 6.7U3 não tem esse problema)
-* Ubuntu 20.4.4; 
+* Ubuntu 20.04.4; 
 * Terraform;
 
 Nesse blog vou mostrar a solução que eu usei para criar as VM's, usando o Terraform, a partir de um template customizado do Ubuntu. 
@@ -36,6 +36,10 @@ Um outro problema que eu encontrei era que a interface de rede (NIC) não conect
 After=dbus.service
 
 ```
+Como as versões < 6.7U3 não suportam o Ubuntu 20.04 precisamos fazer um pequena trapaça. O open-vm-tools usa o arquvio /etc/issue para identificar a distribuição do Ubuntu, vamos editar esse arquivo. (Shame on me 😏)
+```
+sudo sed  -i 's/20/18/g' /etc/issue
+``` 
 
 Devemos remover as configurações de rede da máquina. Apague os arquivos em /etc/netplan e desligue a VM.
 ```
@@ -75,11 +79,12 @@ ipv4_gateway = ""
 ```
 Você pode fazer um clone do repositório do módulo ou simplesmente importa-lo. Agora é só rodar o Terraform. 😍
 ```
+git clone
 terraform init
 terraform plan
 terraform apply
 ```
-Referências: 
+## Referências: 
 * https://kb.vmware.com/s/article/59687
 * https://fabianlee.org/2021/08/16/terraform-creating-an-ubuntu-focal-template-and-then-guest-vm-in-vcenter/
 * https://github.com/vmware/open-vm-tools/issues/421

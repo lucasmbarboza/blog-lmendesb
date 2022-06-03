@@ -78,7 +78,7 @@ ipv4_address = [""] # Ip address list legth should be the same of vm_name
 ipv4_gateway = ""
 
 ```
-Você pode fazer um clone do repositório do módulo ou simplesmente importa-lo. Agora é só rodar o Terraform. 😍
+Agora é só rodar o Terraform. 😍
 ```
 git clone https://github.com/lucasmbarboza/tf-vsphere-multiple-vms.git
 cd /tf-vsphere-multiple-vms

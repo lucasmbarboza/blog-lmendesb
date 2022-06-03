@@ -78,7 +78,7 @@ ipv4_gateway = ""
 
 ```
 Agora é só rodar o Terraform. 😍
-
+```
 git clone https://github.com/lucasmbarboza/tf-vsphere-multiple-vms.git
 cd /tf-vsphere-multiple-vms
 terraform init

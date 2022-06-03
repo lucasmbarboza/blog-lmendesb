@@ -1,4 +1,4 @@
-## Deploy VM Ubuntu 20.4 on vSphere 6.7 with Terraform
+# Deploy VM Ubuntu 20.4 on vSphere 6.7 with Terraform
 
 A idea desse post nasceu do desafio de usar IaC dentro de um DataCenter vmware. O objetivo era automatizar a criação de Cluster Vanilas de Kubernetes usando o Terraform.
 O sistema operacional escolhido para os Nodes kubernetes foi o Ubuntu 20.4.4 LTS, que é uma versão estável do Ubuntu com suporte até 2025. 
@@ -14,7 +14,7 @@ Esse processo pode ser divido em duas partes:
 1- Criação do Template no vCenter
 2- Criação das VMs com Terraform
 
-# 1- Criação do Template no vCenter
+## 1- Criação do Template no vCenter
 
 Com a VM do Ubuntu já instalada vamos fazer algumas modificações para que o template funcione bem com o Terraform. Alias, a maior parte  dos problemas que eu encontrei não foi com o Terraform e sim a dupla Cloud-Init e vCenter. Começamos instalando o open-vm-tools no Ubuntu.
 ```

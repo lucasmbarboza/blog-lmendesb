@@ -1,6 +1,7 @@
 # Criando VMs Ubuntu 20.04 no vSphere 6.7 com Terraform
 
 A idea desse post nasceu do desafio de usar IaC dentro de um DataCenter vmware. O objetivo era automatizar a criação de Cluster Vanilas de Kubernetes usando o Terraform.
+
 O sistema operacional escolhido para os Nodes kubernetes foi o Ubuntu 20.04.4 LTS, que é uma versão estável do Ubuntu com suporte até 2025. 
 Usar o Terraform para criar os Nodes deveria ser uma tarefa simples, mas se mostrou muito trabalhosa pelo fato da versão instalada do vCenter não suportar o Ubuntu 20.04.4 LTS. 
 

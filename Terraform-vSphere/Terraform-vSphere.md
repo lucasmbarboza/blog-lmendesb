@@ -34,11 +34,11 @@ Um outro problema que eu encontrei era que a interface de rede (NIC) não conect
 [units]
 ...
 After=dbus.service
-
+...
 ```
-Como as versões < 6.7U3 do vCenter não suportam o Ubuntu 20.04.4 precisamos fazer um pequena trapaça. O open-vm-tools usa o arquvio /etc/issue para identificar a distribuição do Ubuntu, vamos editar esse arquivo. (Shame on me 😏)
+Como as versões < 6.7U3 do vCenter não suportam o Ubuntu 20.04.4 precisamos fazer um pequena trapaça. O open-vm-tools usa o arquvio /etc/issue para identificar a distribuição do Ubuntu, vamos editar esse arquivo 😏.
 ```
-sudo sed  -i 's/20/18/g' /etc/issue
+sudo sed -i 's/20/18/g' /etc/issue
 ``` 
 
 Devemos remover as configurações de rede da máquina. Apague os arquivos em /etc/netplan e desligue a VM.
@@ -79,7 +79,7 @@ ipv4_gateway = ""
 ```
 Você pode fazer um clone do repositório do módulo ou simplesmente importa-lo. Agora é só rodar o Terraform. 😍
 ```
-git clone
+git clone https://github.com/lucasmbarboza/tf-vsphere-multiple-vms.git
 terraform init
 terraform plan
 terraform apply

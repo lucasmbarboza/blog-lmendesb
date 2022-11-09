@@ -47,8 +47,8 @@ sudo rm /etc/netplan/*.yaml
 sudo shutdown now
 ```
 Antes prosseguir devemos editar as settings da VM: 
-* Mude do Network Adpter para a padrão do vCenter 
-* O CD/DVD não pode ter nenhuma ISO carregada, escolha a opção Client Device ou remova CD/DVD.
+* Mude o Network Adpter para a rede padrão do vCenter 
+* Remova qualquer ISO que esteja montada no drive de CD/DVD
 
 Clique com o botão direito na VM _template > convert to Template_ e então clique em Ok. 
 
